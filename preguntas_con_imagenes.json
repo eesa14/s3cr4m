@@ -1613,7 +1613,7 @@
             "A. Usar la consola de administración de AWS para editar la estructura JSON del secreto en Secrets Manager, de modo que el secreto cumpla automáticamente con el formato requerido por la base de datos.",
             "B. Asegurarse de que el grupo de seguridad asociado a la función Lambda permita conexiones salientes hacia la instancia EC2. Asegurarse de que el grupo de seguridad de la instancia EC2 permita conexiones entrantes desde el grupo de seguridad de la función Lambda.",
             "C. Usar el comando list-secrets de Secrets Manager en la AWS CLI para listar el secreto. Identificar las credenciales de la base de datos. Usar el comando rotate-secret de Secrets Manager en la CLI para forzar la rotación inmediata del secreto.",
-            "D. Agregar una puerta de enlace a Internet (Internet Gateway) a la VPC. Crear una puerta de enlace NAT en una subred pública. Actualizar las tablas de ruteo de la VPC para que el tráfico desde la función Lambda y desde la instancia EC2 pueda llegar al endpoint público de Secrets Manager."
+            "D. Agregar una puerta de enlace a Internet a la VPC. Crear una puerta de enlace NAT en una subred pública. Actualizar las tablas de ruteo de la VPC para que el tráfico desde la función Lambda y desde la instancia EC2 pueda llegar al endpoint público de Secrets Manager."
         ],
         "respuestas_correctas": [
             "B"
@@ -1642,7 +1642,7 @@
         ]
     },
     {
-        "pregunta": "115.- na empresa necesita seguir las mejores prácticas de seguridad para implementar recursos a partir de una plantilla de AWS CloudFormation. La plantilla de CloudFormation debe poder configurar credenciales sensibles de una base de datos. La empresa ya utiliza AWS Key Management Service (AWS KMS) y AWS Secrets Manager. ¿Qué solución cumplirá con los requisitos?",
+        "pregunta": "115.- Una empresa necesita seguir las mejores prácticas de seguridad para implementar recursos a partir de una plantilla de AWS CloudFormation. La plantilla de CloudFormation debe poder configurar credenciales sensibles de una base de datos. La empresa ya utiliza AWS Key Management Service (AWS KMS) y AWS Secrets Manager. ¿Qué solución cumplirá con los requisitos?",
         "opciones": [
             "A. Usar una referencia dinámica en la plantilla de CloudFormation para hacer referencia a las credenciales de la base de datos almacenadas en Secrets Manager.",
             "B. Usar un parámetro en la plantilla de CloudFormation para referenciar las credenciales de la base de datos. Cifrar la plantilla de CloudFormation usando AWS KMS.",
@@ -1925,7 +1925,7 @@
         "opciones": [
             "A. Revisar los grupos de seguridad de entrada y salida, buscando reglas DENY",
             "B. Revisar las reglas de entrada y salida de las listas de control de acceso de red, buscando reglas DENY",
-            "C. Revisar los códigos de motivo de paquetes rechazados en los registros de flujo de VPC (VPC Flow Logs)",
+            "C. Revisar los códigos de motivo de paquetes rechazados en los registros de flujo de VPC",
             "D. Usar AWS X-Ray para rastrear el flujo de la aplicación de extremo a extremo"
         ],
         "respuestas_correctas": [
@@ -2098,7 +2098,7 @@
     {
         "pregunta": "148.- Una empresa de comercio electrónico está desarrollando una nueva arquitectura para una versión de su aplicación. La empresa necesita implementar TLS para el tráfico entrante hacia la aplicación. El tráfico proviene de internet. No es necesario implementar TLS de extremo a extremo, ya que la empresa está preocupada por el impacto en el rendimiento. Los tipos de tráfico entrante serán HTTP y HTTPS, y la aplicación utiliza los puertos 80 y 443. ¿Qué debe hacer un ingeniero de seguridad para cumplir con estos requisitos?",
         "opciones": [
-            "A. Crear un Application Load Balancer (ALB) público. Crear dos listeners: uno en el puerto 80 y otro en el puerto 443. Crear un grupo de destino (target group). Crear una regla para redirigir el tráfico del puerto 80 al listener en el puerto 443. Provisionar un certificado TLS público en AWS Certificate Manager (ACM). Adjuntar el certificado al listener en el puerto 443.",
+            "A. Crear un Application Load Balancer (ALB) público. Crear dos listeners: uno en el puerto 80 y otro en el puerto 443. Crear un grupo de destino. Crear una regla para redirigir el tráfico del puerto 80 al listener en el puerto 443. Provisionar un certificado TLS público en AWS Certificate Manager (ACM). Adjuntar el certificado al listener en el puerto 443.",
             "B. Crear un Application Load Balancer (ALB) público. Crear dos listeners: uno en el puerto 80 y otro en el puerto 443. Crear un grupo de destino. Crear una regla para redirigir el tráfico del puerto 80 al listener en el puerto 443. Provisionar un certificado TLS público en AWS Certificate Manager (ACM). Adjuntar el certificado al listener en el puerto 80.",
             "C. Crear un Network Load Balancer (NLB) público. Crear dos listeners: uno en el puerto 80 y otro en el puerto 443. Crear un grupo de destino. Crear una regla para redirigir el tráfico del puerto 80 al listener en el puerto 443. Configurar el protocolo del listener en el puerto 443 como TLS.",
             "D. Crear un Network Load Balancer (NLB) público. Crear un listener en el puerto 443. Crear un grupo de destino. Crear una regla para redirigir el tráfico del puerto 443 al grupo de destino. Configurar el protocolo del listener en el puerto 443 como TLS."
@@ -2212,7 +2212,7 @@
         "opciones": [
             "A. Crear una alarma de Amazon CloudWatch que invoque una función de AWS Lambda cuando la utilización de CPU de una instancia EC2 alcance el 90%. Programar la función Lambda para actualizar los grupos de seguridad adjuntos a la instancia EC2 y denegar el tráfico entrante por los puertos 80 y 443.",
             "B. Colocar las instancias EC2 en un grupo de Auto Scaling detrás de un balanceador de carga de Elastic Load Balancing (ELB). Usar Amazon CloudFront con Amazon S3 como origen.",
-            "C. Configurar un entorno de recuperación ante desastres (disaster recovery, DR) en espera activa (warm standby). Cambiar a este entorno si se detecta un ataque DDoS en la aplicación.",
+            "C. Configurar un entorno de recuperación ante desastres (DR) en espera activa. Cambiar a este entorno si se detecta un ataque DDoS en la aplicación.",
             "D. Suscribirse a AWS Shield Advanced. Configurar permisos para permitir que el Shield Response Team gestione los recursos en nombre de la empresa durante un evento DDoS."
         ],
         "respuestas_correctas": [
@@ -2541,9 +2541,9 @@
     {
         "pregunta": "180.- Una empresa quiere recibir notificaciones por correo electrónico automáticas cuando se detecten claves de acceso de cuentas de desarrolladores de AWS en sitios de repositorios de código. ¿Qué solución proporcionará las notificaciones por correo electrónico requeridas?",
         "opciones": [
-            "A. Crear una regla de Amazon EventBridge para enviar notificaciones por correo electrónico mediante Amazon SNS (Simple Notification Service) para hallazgos de Amazon GuardDuty del tipo UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS.",
-            "B. Cambiar la información de contacto de tipo \"Operaciones\" de la cuenta de AWS a una dirección de correo electrónico distinta. Consultar periódicamente esta dirección de correo para revisar notificaciones.",
-            "C. Crear una regla de Amazon EventBridge que reaccione a eventos de AWS Health con un valor de \"Risk\" en la categoría de servicio. Configurar notificaciones por correo usando Amazon SNS.",
+            "A. Crear una regla de Amazon EventBridge para enviar notificaciones por correo electrónico mediante Amazon SNS para hallazgos de Amazon GuardDuty del tipo UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.OutsideAWS.",
+            "B. Cambiar la información de contacto de tipo Operaciones de la cuenta de AWS a una dirección de correo electrónico distinta. Consultar periódicamente esta dirección de correo para revisar notificaciones.",
+            "C. Crear una regla de Amazon EventBridge que reaccione a eventos de AWS Health con un valor de Risk en la categoría de servicio. Configurar notificaciones por correo usando Amazon SNS.",
             "D. Implementar un nuevo software de detección de anomalías. Ingerir los registros de AWS CloudTrail. Configurar la supervisión para eventos de tipo ConsoleLogin en la Consola de Administración de AWS. Configurar notificaciones por correo desde el software de detección de anomalías."
         ],
         "respuestas_correctas": [
@@ -2623,7 +2623,7 @@
     {
         "pregunta": "186.- Una empresa usó AWS Organizations para configurar un entorno con múltiples cuentas de AWS. Actualmente, la organización de la empresa tiene dos cuentas de AWS, pero se espera agregar más de 50 cuentas adicionales durante los próximos 12 meses. La empresa requiere que todas las cuentas actuales y futuras usen Amazon GuardDuty. Cada cuenta actual ya tiene GuardDuty activado. Actualmente, la empresa revisa los hallazgos de GuardDuty iniciando sesión en cada cuenta individualmente. La empresa desea tener una vista centralizada de los hallazgos de GuardDuty de las cuentas existentes y de cualquier cuenta futura. Además, debe asegurarse de que GuardDuty se active automáticamente en cualquier nueva cuenta de AWS. ¿Qué solución cumplirá con estos requisitos?",
         "opciones": [
-            "A. Activar AWS Security Hub en la cuenta principal (management account) de la organización. Configurar GuardDuty dentro de esa cuenta para enviar todos los hallazgos a Security Hub.",
+            "A. Activar AWS Security Hub en la cuenta principal de la organización. Configurar GuardDuty dentro de esa cuenta para enviar todos los hallazgos a Security Hub.",
             "B. Crear una nueva cuenta de AWS dentro de la organización. Activar GuardDuty en esa cuenta. Designarla como cuenta administradora delegada para GuardDuty. Configurar GuardDuty para agregar las cuentas existentes como cuentas miembro. Seleccionar la opción para agregar automáticamente nuevas cuentas de AWS a la organización.",
             "C. Crear una nueva cuenta en la organización. Activar GuardDuty en esa cuenta. Activar AWS Security Hub en cada cuenta. Seleccionar la opción para agregar automáticamente nuevas cuentas de AWS a la organización.",
             "D. Activar AWS Security Hub en la cuenta principal de la organización. Designar esa cuenta como administradora delegada de Security Hub. Agregar las cuentas existentes como cuentas miembro. Seleccionar la opción para agregar automáticamente nuevas cuentas a la organización. Enviar todos los hallazgos de Security Hub a la cuenta de GuardDuty de la organización."
@@ -2947,7 +2947,7 @@
     {
         "pregunta": "210.- Un ingeniero de seguridad de una gran empresa está gestionando una aplicación de procesamiento de datos que es utilizada por 1.500 empresas subsidiarias. Tanto la empresa matriz como sus subsidiarias utilizan AWS. La aplicación usa el puerto TCP 443 y se ejecuta en instancias de Amazon EC2 detrás de un Network Load Balancer (NLB). Por razones de cumplimiento, la aplicación debe ser accesible solo para las subsidiarias y no debe estar disponible en Internet público. Para cumplir con estos requisitos de acceso restringido, el ingeniero ha recibido los rangos de bloques CIDR públicos y privados de cada subsidiaria. ¿Qué solución debería implementar el ingeniero para aplicar las restricciones de acceso adecuadas a la aplicación?",
         "opciones": [
-            "A. Crear una NACL (lista de control de acceso a la red) para permitir el acceso por el puerto TCP 443 desde los 1.500 bloques CIDR de las subsidiarias. Asociar la NACL tanto al NLB como a las instancias EC2.",
+            "A. Crear una NACL para permitir el acceso por el puerto TCP 443 desde los 1.500 bloques CIDR de las subsidiarias. Asociar la NACL tanto al NLB como a las instancias EC2.",
             "B. Crear un grupo de seguridad de AWS para permitir el acceso por el puerto TCP 443 desde los 1.500 bloques CIDR de las subsidiarias. Asociar el grupo de seguridad al NLB. Crear un segundo grupo de seguridad para las instancias EC2 que permita el acceso por el puerto TCP 443 desde el grupo de seguridad del NLB.",
             "C. Crear un servicio de endpoint de AWS PrivateLink en la cuenta de la empresa matriz, conectado al NLB. Crear un grupo de seguridad para las instancias que permita el acceso por el puerto TCP 443 desde el endpoint de AWS PrivateLink. Usar endpoints de interfaz de AWS PrivateLink en las 1.500 cuentas AWS de las subsidiarias para conectarse a la aplicación de procesamiento de datos.",
             "D. Crear un grupo de seguridad de AWS para permitir el acceso por el puerto TCP 443 desde los 1.500 bloques CIDR de las subsidiarias. Asociar el grupo de seguridad con las instancias EC2."
@@ -2961,9 +2961,9 @@
         "pregunta": "211.- Una empresa ejecuta cargas de trabajo en instancias Amazon EC2. La empresa necesita escanear continuamente esas instancias en busca de vulnerabilidades de software y exposición no intencionada a la red. ¿Qué solución cumplirá con estos requisitos?",
         "opciones": [
             "A. Usar Amazon Inspector. Configurar el modo de escaneo en escaneo híbrido.",
-            "B. Usar Amazon GuardDuty. Habilitar la función de protección contra malware (Malware Protection).",
-            "C. Usar Amazon Inspector. Habilitar la función de protección contra malware (Malware Protection).",
-            "D. Usar Amazon GuardDuty. Habilitar la función de monitoreo en tiempo de ejecución (Runtime Monitoring)."
+            "B. Usar Amazon GuardDuty. Habilitar la función de protección contra malware.",
+            "C. Usar Amazon Inspector. Habilitar la función de protección contra malware.",
+            "D. Usar Amazon GuardDuty. Habilitar la función de monitoreo en tiempo de ejecución."
         ],
         "respuestas_correctas": [
             "A"
@@ -2974,7 +2974,7 @@
         "pregunta": "212.- Una empresa tiene como requisito que ningún grupo de seguridad de Amazon EC2 permita acceso SSH desde el bloque CIDR 0.0.0.0/0. La empresa quiere monitorear el cumplimiento de este requisito en todo momento y recibir una notificación casi en tiempo real si algún grupo de seguridad no cumple con la política. Un ingeniero de seguridad ya ha configurado AWS Config y utilizará la regla administrada restricted-ssh para monitorear los grupos de seguridad. ¿Qué debe hacer el ingeniero de seguridad a continuación para cumplir con estos requisitos?",
         "opciones": [
             "A. Configurar AWS Config para que envíe sus capturas de configuración a un bucket de Amazon S3. Crear una función de AWS Lambda que se ejecute al producirse un evento PutObject en el bucket. Configurar la función Lambda para analizar la captura en busca de cambios de cumplimiento en la regla restricted-ssh. Configurar la función para enviar una notificación a un tema de Amazon SNS si se detecta un cambio.",
-            "B.  Configure una regla de evento de Amazon EventBridge que se invoque mediante un evento de cambio de conformidad desde AWS Config para la regla administrada con SSH restringido. Configure la regla de evento para que se dirija a un tema de Amazon Simple Notification Service (Amazon SNS) que enviará una notificación. .",
+            "B.  Configure una regla de evento de Amazon EventBridge que se invoque mediante un evento de cambio de conformidad desde AWS Config para la regla administrada con SSH restringido. Configure la regla de evento para que se dirija a un tema de Amazon SNS que enviará una notificación. .",
             "C. Configurar AWS Config para que envíe todas sus notificaciones de cumplimiento a Amazon CloudWatch Logs. Configurar un filtro de métricas de CloudWatch Logs en el grupo de logs de AWS Config para buscar cambios en el cumplimiento de la regla restricted-ssh. Crear una alarma de CloudWatch sobre ese filtro para enviar una notificación a un tema de Amazon SNS si la alarma entra en estado ALARM.",
             "D. Configurar una alarma de Amazon CloudWatch sobre la métrica de la regla restricted-ssh. Configurar la alarma para que envíe una notificación a un tema de Amazon SNS si la alarma entra en estado ALARM."
         ],
@@ -3001,9 +3001,9 @@
     {
         "pregunta": "214.- Una empresa utiliza AWS Key Management Service (AWS KMS). Durante un intento de adjuntar un volumen cifrado de Amazon Elastic Block Store (Amazon EBS) a una instancia de Amazon EC2, la operación falla. La empresa descubre que una clave administrada por el cliente (CMK) se volvió inutilizable porque se eliminó el material de clave. La empresa necesita acceder a los datos que están en el volumen de EBS. Un ingeniero de seguridad debe recomendar una solución para descifrar la clave de datos cifrada del volumen EBS. La solución también debe permitir adjuntar el volumen a la instancia EC2. ¿Qué solución cumplirá con estos requisitos?",
         "opciones": [
-            "A. Importar nuevo material de clave en la clave. Adjuntar el volumen de EBS.",
+            "A. Importar nuevo material de clave a la clave. Adjuntar el volumen de EBS.",
             "B. Restaurar el volumen de EBS desde una snapshot tomada antes de que se eliminara el material de clave.",
-            "C. Reimportar el mismo material de clave que originalmente se importó en la clave. Adjuntar el volumen de EBS.",
+            "C. Reimportar el mismo material de clave que originalmente se importó a la clave. Adjuntar el volumen de EBS.",
             "D. Crear una nueva clave. Importar nuevo material de clave. Adjuntar el volumen de EBS."
         ],
         "respuestas_correctas": [
@@ -3107,7 +3107,7 @@
         "opciones": [
             "A. Configurar AWS Directory Service con el IdP externo. Crear políticas de IAM y asociarlas con los usuarios del IdP externo.",
             "B. Habilitar AWS IAM Identity Center y usar el IdP externo como fuente de identidad. Crear conjuntos de permisos y asignaciones de cuentas usando IAM Identity Center.",
-            "C. Configurar AWS Identity and Access Management (IAM) para usar el IdP externo como proveedor de identidad. Crear políticas de IAM y asociarlas con usuarios del IdP externo.",
+            "C. Configurar AWS Identity and Access Management para usar el IdP externo como proveedor de identidad. Crear políticas de IAM y asociarlas con usuarios del IdP externo.",
             "D. Habilitar Amazon Cognito en la cuenta de administración de la organización. Crear un pool de identidades y asociarlo con el IdP externo. Crear roles de IAM y asociarlos al pool de identidades."
         ],
         "respuestas_correctas": [
