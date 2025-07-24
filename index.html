@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Examen de Preguntas</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Examen de Preguntas</title>
+<link href="manifest.json" rel="manifest"/>
+<link href="style.css" rel="stylesheet"/>
+<script defer="" src="script_final_seleccion_multiple.js"></script>
+<style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -112,19 +113,155 @@
                 font-size: 14px;
             }
         }
-    </style>
+    
+.opcion img {
+    display: block;
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+.opcion img {
+    display: block;
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: none;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.opcion img {
+    display: block;
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: 600px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.opcion img {
+    display: block;
+    margin-top: 10px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: none !important;
+    object-fit: contain;
+}
+</style>
 </head>
 <body>
+<div class="contenedor">
+<h1>Cuestionario</h1>
+<div id="contenedor-preguntas"></div>
+<div class="pagina-control">
+<button disabled="" id="anterior">Anterior</button>
+<span id="pagina-info"></span>
+<button id="siguiente">Siguiente</button>
+<div id="resultado-final" style="display: none; margin-top: 30px; padding: 20px; background-color: #e9f7ef; border-left: 6px solid #28a745; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+<h2 style="color: #155724;">Resultado Final</h2>
+<p id="texto-resultado" style="font-size: 18px; color: #155724;"></p>
+<button onclick="location.reload()">Reiniciar cuestionario</button>
+</div>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const contenedor = document.getElementById("contenedor");
+    const botonSiguiente = document.getElementById("btnSiguiente");
+    const botonAnterior = document.getElementById("btnAnterior");
+    const contador = document.getElementById("contador");
+    let preguntas = [];
+    let preguntaActual = 0;
+    let respuestasUsuario = [];
 
-    <div class="contenedor">
-        <h1>Cuestionario</h1>
-        <div id="contenedor-preguntas"></div>
-        <div class="pagina-control">
-            <button id="anterior" disabled>Anterior</button>
-            <span id="pagina-info"></span>
-            <button id="siguiente">Siguiente</button>
-        </div>
-    </div>
+    fetch("preguntas_con_imagenes.json")
+        .then(response => response.json())
+        .then(data => {
+            preguntas = data.sort(() => Math.random() - 0.5).slice(0, 75);
+            mostrarPregunta();
+        });
+
+    function mostrarPregunta() {
+        const pregunta = preguntas[preguntaActual];
+        contenedor.innerHTML = "";
+        const preguntaElem = document.createElement("div");
+        preguntaElem.classList.add("pregunta");
+        preguntaElem.innerHTML = `<strong>${pregunta.numero}.-</strong> ${pregunta.pregunta}`;
+        contenedor.appendChild(preguntaElem);
+
+        pregunta.opciones.forEach((opcion, index) => {
+            const opcionElem = document.createElement("div");
+            opcionElem.classList.add("opcion");
+            opcionElem.innerHTML = `
+                <label>
+                    <input type="${pregunta.correcta.length > 1 ? 'checkbox' : 'radio'}" name="respuesta" value="${String.fromCharCode(65 + index)}">
+                    <strong>${String.fromCharCode(65 + index)}.</strong> ${opcion.texto}
+                    ${opcion.imagen ? `<img src="${opcion.imagen}" style="margin-top:10px;">` : ""}
+                </label>
+            `;
+            contenedor.appendChild(opcionElem);
+        });
+
+        contador.textContent = `Pregunta ${preguntaActual + 1} de 75`;
+        botonAnterior.disabled = preguntaActual === 0;
+        botonSiguiente.textContent = preguntaActual === 74 ? "Finalizar" : "Siguiente";
+    }
+
+    function obtenerSeleccionadas() {
+        const seleccionados = contenedor.querySelectorAll("input[name='respuesta']:checked");
+        return Array.from(seleccionados).map(x => x.value);
+    }
+
+    botonSiguiente.addEventListener("click", () => {
+        const seleccion = obtenerSeleccionadas();
+        respuestasUsuario[preguntaActual] = seleccion;
+
+        if (preguntaActual < 74) {
+            preguntaActual++;
+            mostrarPregunta();
+        } else {
+            mostrarResultado();
+        }
+    });
+
+    botonAnterior.addEventListener("click", () => {
+        if (preguntaActual > 0) {
+            preguntaActual--;
+            mostrarPregunta();
+        }
+    });
+
+    function mostrarResultado() {
+        let correctas = 0;
+        preguntas.forEach((pregunta, idx) => {
+            const userResp = respuestasUsuario[idx] || [];
+            const correctasReal = pregunta.correcta.sort().join("");
+            const elegidas = userResp.sort().join("");
+            if (elegidas === correctasReal) {
+                correctas++;
+            }
+        });
+
+        contenedor.innerHTML = `
+            <h2>¡Has completado el cuestionario!</h2>
+            <p>Tu puntaje fue: <strong>${correctas} de 75</strong></p>
+            <button onclick="location.reload()">Volver a intentar</button>
+        `;
+        contador.textContent = "";
+        botonAnterior.style.display = "none";
+        botonSiguiente.style.display = "none";
+    }
+});
+</script>
+<div id="resultadoFinal" style="display: none; text-align: center; margin-top: 40px;">
+  <h2>Resultado Final</h2>
+  <p id="resultadoTexto" style="font-size: 1.5em;"></p>
+  <button onclick="location.reload()">Reiniciar cuestionario</button>
+</div>
 
 </body>
 </html>
